@@ -1,5 +1,5 @@
 /**********************************************
-sheet.gas
+sheet.gs
 Sheetオブジェクトを操作する汎用的な機能を保持
 **********************************************/
 
@@ -13,5 +13,5 @@ Sheetオブジェクトを操作する汎用的な機能を保持
 function findText(sheet, key) {
   const textFinder = sheet.createTextFinder(key);
   const range = textFinder.findNext();
-  return range
+  return range;
 }

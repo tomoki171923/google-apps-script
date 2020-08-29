@@ -1,5 +1,5 @@
 /**********************************************
-folder.gas
+folder.gs
 Folderオブジェクトを操作する汎用的な機能を保持
 **********************************************/
 
@@ -17,7 +17,6 @@ function getFolder(spreadsheet) {
   return folder;
 }
 
-
 /*
 機能:
     引数のフォルダ内に新規でフォルダを作成する
@@ -30,7 +29,6 @@ function createFolder(parentFolder, foldername) {
   return newfolder;
 }
 
-
 /*
 機能:
     ドライブフォルダにJSONファイルを作成
@@ -40,13 +38,15 @@ function createFolder(parentFolder, foldername) {
     folder: ファイルを保存するフォルダオブジェクト(Folder)
 */
 function createJsonFile(fileData, fileName, folder) {
-  const contentType = 'text/json';
+  const contentType = "text/json";
   fileName += ".json";
-  const charset = 'utf-8';
-  const blob = Utilities.newBlob('', contentType, fileName).setDataFromString(fileData, charset);
+  const charset = "utf-8";
+  const blob = Utilities.newBlob("", contentType, fileName).setDataFromString(
+    fileData,
+    charset
+  );
   folder.createFile(blob);
 }
-
 
 /*
 機能:
@@ -57,13 +57,15 @@ function createJsonFile(fileData, fileName, folder) {
     folder: ファイルを保存するフォルダオブジェクト(Folder)
 */
 function createCsvFile(fileData, fileName, folder) {
-  var contentType = 'text/csv';
+  var contentType = "text/csv";
   fileName += ".csv";
-  var charset = 'utf-8';
-  var blob = Utilities.newBlob('', contentType, fileName).setDataFromString(fileData, charset);
+  var charset = "utf-8";
+  var blob = Utilities.newBlob("", contentType, fileName).setDataFromString(
+    fileData,
+    charset
+  );
   folder.createFile(blob);
 }
-
 
 /*
 機能:
@@ -88,7 +90,6 @@ function existFile(folder, fileName) {
   }
   return targetFile;
 }
-
 
 /*
 機能:

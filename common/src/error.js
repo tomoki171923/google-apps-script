@@ -1,5 +1,5 @@
 /**********************************************
-error.gas
+error.gs
 Errorオブジェクトを操作する汎用的な機能を保持
 **********************************************/
 
@@ -10,7 +10,7 @@ Errorオブジェクトを操作する汎用的な機能を保持
     error: Errorオブジェクト(Error)
 */
 function outputError(error) {
-  const msg = "NAME : " + error.name + "\n" +
-    "STACK TRACE : \n" + error.stack;
+  const msg = "NAME : " + error.name + "\n" + "STACK TRACE : \n" + error.stack;
   Logger.log(msg);
+  Browser.msgBox(error.stack);
 }

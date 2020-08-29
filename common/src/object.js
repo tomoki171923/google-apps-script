@@ -1,5 +1,5 @@
 /**********************************************
-object.gas
+object.gs
 オブジェクトを操作する汎用的な機能を保持
 **********************************************/
 
@@ -11,15 +11,14 @@ object.gas
 */
 function isNull(data) {
   if (typeof data == "string" && !data.trim()) {
-    data = null
+    data = null;
   }
   if (data == null || data == undefined) {
-    return true
+    return true;
   } else {
-    return false
+    return false;
   }
 }
-
 
 /*
 機能:
@@ -29,9 +28,8 @@ function isNull(data) {
     data: データ(Object)
 */
 function isExisted(array, data) {
-  return array.includes(data)
+  return array.includes(data);
 }
-
 
 /*
 機能:
@@ -40,5 +38,5 @@ function isExisted(array, data) {
     obj: オブジェクト(Object)
 */
 function getObjecyType(obj) {
-  return Object.prototype.toString.call(obj)
+  return Object.prototype.toString.call(obj);
 }

@@ -1,5 +1,5 @@
 /**********************************************
-date.gas
+date.gs
 Dateオブジェクトを操作する汎用的な機能を保持
 **********************************************/
 
@@ -12,7 +12,6 @@ Dateオブジェクトを操作する汎用的な機能を保持
 function getTime(format = "yyyyMMdd_HHmmSS") {
   return Utilities.formatDate(new Date(), "Asia/Tokyo", format);
 }
-
 
 /*
 機能:
