@@ -72,6 +72,7 @@ modify ./YOUR_PROJECT_NAME/src/appsscript.json
 }
 ```
 
+
 ## How to deploy to your own GAS project
 modify ./deploy.yml
 change YOUR_SCRIPT_ID and YOUR_PROJECT_NAME
@@ -83,9 +84,20 @@ target:
   script_id: "YOUR_SCRIPT_ID"
   project_name: "YOUR_PROJECT_NAME"
 ```
-deploy to your own GAS project
+
+deploy to your own GAS project (Common project & Target progect)
 ```
 python deploy.py
+```
+
+deploy to your own GAS project (Only Common project)
+```
+python deploy.py --common
+```
+
+deploy to your own GAS project (Only Target progect)
+```
+python deploy.py ---target
 ```
 
 
