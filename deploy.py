@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-How to use this script file.
-- Deploying to GAS Project
-python deploy.py
-"""
-
 import subprocess
 from subprocess import PIPE
 import sys
@@ -15,8 +9,8 @@ import json
 import termcolor
 import shutil
 
-# execute a bash command
-def execBash(cmd):
+# execute a command
+def execCmd(cmd):
     print('----------' + cmd + '----------')
     result = subprocess.run(
         cmd, shell=True, stdout=PIPE, stderr=PIPE, text=True)
@@ -35,7 +29,7 @@ def execBash(cmd):
 
 def updateProduction(project_name: str):
     cmd = f"cd {project_name} && npm run update_production && cd ../"
-    result = execBash(cmd)
+    result = execCmd(cmd)
     version = None
     for line in result.stdout.splitlines():
         if 'Created version' in line:
@@ -47,27 +41,59 @@ def updateProduction(project_name: str):
     return int(version)
 
 
-def deploy(common_name: str, project_name: str):
-    print(f"************ Start Deploying to GAS {project_name} ************")
+def __deployCommon(common_name: str):
+    print(f"************ Start Deploying to GAS {common_name} ************")
     cmd = f"cd {common_name} && npm run prettier && echo 'y' | npm run push && cd ../"
-    execBash(cmd)
-    commonVer = updateProduction(common_name)
+    execCmd(cmd)
+    version = updateProduction(common_name)
+    print(f"************ End Deploying to GAS {common_name} ************")
+    return version
 
-    jsonPath = f"{project_name}/src/appsscript.json"
-    with open(jsonPath, "r") as file:
-        jsonData = json.load(file)
-    for library in jsonData['dependencies']['libraries']:
-        if library['userSymbol']=='common':
-            library['version']= commonVer
-    with open(jsonPath, "w") as file:
-        json.dump(jsonData, file, indent=2, ensure_ascii=False)
-    
+
+def __deployTarget(project_name: str):
+    print(f"************ Start Deploying to GAS {project_name} ************")
     cmd = f"cd {project_name} && npm run prettier && echo 'y' | npm run push && cd ../"
-    execBash(cmd)
+    execCmd(cmd)
     print(f"************ End Deploying to GAS {project_name} ************")
+
+
+
+def deploy(common_name: str, project_name=None):
+    if project_name is None:
+        # CASE: Common
+        __deployCommon(common_name)
+        return
+    elif common_name is None:
+        # CASE: Target
+        __deployTarget(project_name)
+        return
+    else:
+        # CASE: Target & Common
+        common_ver = __deployCommon(common_name)
+        jsonPath = f"{project_name}/src/appsscript.json"
+        with open(jsonPath, "r") as file:
+            jsonData = json.load(file)
+        for library in jsonData['dependencies']['libraries']:
+            if library['userSymbol']=='common':
+                library['version']= common_ver
+        with open(jsonPath, "w") as file:
+            json.dump(jsonData, file, indent=2, ensure_ascii=False)
+        __deployTarget(project_name)
 
 
 if __name__ == "__main__":
     with open('./deploy.yml') as file:
         deploy_yaml = yaml.safe_load(file)
-    deploy(deploy_yaml['common']['project_name'], deploy_yaml['target']['project_name'])
+    args = sys.argv
+    if len(args) == 1:
+        deploy(deploy_yaml['common']['project_name'], deploy_yaml['target']['project_name'])
+    elif len(args) == 2:
+        if args[1] == '--common':
+            deploy(deploy_yaml['common']['project_name'])
+        elif args[1] == '--target':
+            deploy(None, deploy_yaml['target']['project_name'])
+        else:
+            print(termcolor.colored('Arguments are invalid...', 'red'))
+    else:
+        print(termcolor.colored('Arguments are invalid...', 'red'))
+
