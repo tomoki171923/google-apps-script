@@ -1,0 +1,6 @@
+common:
+  script_id: "*********************************************************"
+  project_name: "Common"
+target:
+  script_id: "YOUR_SCRIPT_ID"
+  project_name: "YOUR_PROJECT_NAME"
