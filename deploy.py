@@ -69,15 +69,19 @@ def deploy(common_name: str, project_name=None):
         return
     else:
         # CASE: Target & Common
+        flag = False
         common_ver = __deployCommon(common_name)
         jsonPath = f"{project_name}/src/appsscript.json"
         with open(jsonPath, "r") as file:
             jsonData = json.load(file)
-        for library in jsonData['dependencies']['libraries']:
-            if library['userSymbol']=='common':
-                library['version']= common_ver
-        with open(jsonPath, "w") as file:
-            json.dump(jsonData, file, indent=2, ensure_ascii=False)
+        if 'dependencies' in jsonData:
+            for library in jsonData['dependencies']['libraries']:
+                if library['userSymbol']=='Common':
+                    flag = True
+                    library['version']= common_ver
+        if flag:
+            with open(jsonPath, "w") as file:
+                json.dump(jsonData, file, indent=2, ensure_ascii=False)
         __deployTarget(project_name)
 
 

@@ -3,12 +3,11 @@ folder.gs
 Folderオブジェクトを操作する汎用的な機能を保持
 **********************************************/
 
-/*
-機能:
-    引数のSpreadSheetを配置しているフォルダオブジェクトを返却する
-引数:
-    spreadsheet: Spreadsheetオブジェクト(Spreadsheet)
-*/
+/**
+ * 引数のSpreadSheetを配置しているフォルダオブジェクトを返却する
+ * @param {Spreadsheet} spreadsheet (require): Spreadsheetオブジェクト
+ * @return {Folder} 引数のSpreadSheetを配置しているフォルダオブジェクト
+ */
 function getFolder(spreadsheet) {
   const ssId = spreadsheet.getId();
   const parentFolder = DriveApp.getFileById(ssId).getParents();
@@ -17,26 +16,23 @@ function getFolder(spreadsheet) {
   return folder;
 }
 
-/*
-機能:
-    引数のフォルダ内に新規でフォルダを作成する
-引数:
-    parentFolder: フォルダオブジェクト(Folder)
-    folderName: フォルダ名(String)
-*/
+/**
+ * 引数のフォルダ内に新規でフォルダを作成する
+ * @param {Folder} parentFolder (require): 親フォルダ
+ * @param {String} folderName (require): 新規作成するフォルダ名
+ * @return {Folder} 新規で作成したフォルダオブジェクト
+ */
 function createFolder(parentFolder, foldername) {
   const newfolder = parentFolder.createFolder(foldername);
   return newfolder;
 }
 
-/*
-機能:
-    ドライブフォルダにJSONファイルを作成
-引数:
-    fileData: ファイル内データ(Json)
-    fileName: ファイル名(String)
-    folder: ファイルを保存するフォルダオブジェクト(Folder)
-*/
+/**
+ * ドライブフォルダにJSONファイルを作成
+ * @param {Json} fileData (require): ファイル内データ
+ * @param {String} fileName (require): ファイル名
+ * @param {Folder} folder (require): ファイルを保存するフォルダオブジェクト
+ */
 function createJsonFile(fileData, fileName, folder) {
   const contentType = "text/json";
   fileName += ".json";
@@ -48,14 +44,12 @@ function createJsonFile(fileData, fileName, folder) {
   folder.createFile(blob);
 }
 
-/*
-機能:
-    ドライブフォルダにCSVファイルを作成
-引数:
-    fileData: ファイル内データ(CSV)
-    fileName: ファイル名(String)
-    folder: ファイルを保存するフォルダオブジェクト(Folder)
-*/
+/**
+ * ドライブフォルダにCSVファイルを作成
+ * @param {CSV} fileData (require): ファイル内データ
+ * @param {String} fileName (require): ファイル名
+ * @param {Folder} folder (require): ファイルを保存するフォルダオブジェクト
+ */
 function createCsvFile(fileData, fileName, folder) {
   var contentType = "text/csv";
   fileName += ".csv";
@@ -67,16 +61,16 @@ function createCsvFile(fileData, fileName, folder) {
   folder.createFile(blob);
 }
 
-/*
-機能:
-    フォルダ内に引数の名前のファイルが存在しているか判定
-    以下を返却する
-      ファイルが存在している場合 : spreadsheetオブジェクト
-      ファイルが存在していない場合 : null
-引数:
-    folder: フォルダオブジェクト(Folder)
-    fileName: ファイル名(String)
-*/
+/**
+ * フォルダ内に引数の名前のファイルが存在しているか判定
+ * 以下を返却する
+ *   ファイルが存在している場合 : spreadsheetオブジェクト
+ *   ファイルが存在していない場合 : null
+ * @param {Folder} folder (require): フォルダオブジェクト
+ * @param {String} fileName (require): ファイル名
+ * @return {Spreadsheet} spreadsheetオブジェクト
+ * @return {Null}
+ */
 function existFile(folder, fileName) {
   let files = folder.getFiles();
   let file = null;
@@ -91,16 +85,16 @@ function existFile(folder, fileName) {
   return targetFile;
 }
 
-/*
-機能:
-    フォルダ内に引数の名前のサブフォルダが存在しているか判定
-    以下を返却する
-      サブフォルダが存在している場合 : サブフォルダオブジェクト(folder)
-      サブフォルダが存在していない場合 : null
-引数:
-    folder: フォルダオブジェクト(Folder)
-    folderName: サブフォルダ名(String)
-*/
+/**
+ * フォルダ内に引数の名前のサブフォルダが存在しているか判定
+ * 以下を返却する
+ *   サブフォルダが存在している場合 : サブフォルダオブジェクト(folder)
+ *   サブフォルダが存在していない場合 : null
+ * @param {Folder} folder (require): フォルダオブジェクト
+ * @param {String} folderName (require): フォルダ名
+ * @return {Folder} サブフォルダオブジェクト
+ * @return {Null}
+ */
 function existFolder(folder, folderName) {
   const subfolders = folder.getFolders();
   let subfolder;
