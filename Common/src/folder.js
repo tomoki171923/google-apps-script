@@ -38,7 +38,7 @@ function createJsonFile(fileData, fileName, folder) {
   fileName += ".json";
   const charset = "utf-8";
   const blob = Utilities.newBlob("", contentType, fileName).setDataFromString(
-    fileData,
+    JSON.stringify(fileData, null, "\t"),
     charset
   );
   folder.createFile(blob);
