@@ -33,9 +33,13 @@ function __load (sheet) {
         key = sheet.getRange(1, x).getValue();
         value = sheet.getRange(y, x).getValue();
         // 必須値にデータがなければエラーを発生させる
-        if (Common.isNull(value) && Common.isExisted(requiredParams, key)) {
-          const errormsg = __createErrorMsg(spreadsheet, sheet, y, x);
-          throw new ReferenceError(errormsg);
+        if (Common.isNull(value)) {
+          if (Common.isExisted(requiredParams, key)){
+            const errormsg = __createErrorMsg(spreadsheet, sheet, y, x);
+            throw new ReferenceError(errormsg);
+          }else{
+            continue;
+          }
         }
         //  左がkey　右がvalue
         json[key] = sheet.getRange(y, x).getValue();
