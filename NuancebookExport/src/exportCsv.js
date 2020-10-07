@@ -11,10 +11,10 @@ function __load(sheet) {
   return csv;
 }
 
-function main() {
+function exportCsv() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   const folder = Common.getFolder(spreadsheet);
-  const foldername = "outputCsv_" + Common.getTime();
+  const foldername = "exportCsv_" + Common.getTime();
   const newFolder = Common.createFolder(folder, foldername);
   const sheet = spreadsheet.getSheetByName("nb_words");
   const csvData = __load(sheet);
