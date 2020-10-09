@@ -1,17 +1,17 @@
-function __load (sheet) {
+function __loadJson(sheet) {
   //入力必須値
   const requiredParams = [
-    'jword',
-    'hiragana',
-    'eword',
-    'pronunciation_us',
-    'oxford_dictionary',
-    'summary',
-    'meaning',
-    'example_en1',
-    'example_ja1',
-    'class1'
-  ]
+    "jword",
+    "hiragana",
+    "eword",
+    "pronunciation_us",
+    "oxford_dictionary",
+    "summary",
+    "meaning",
+    "example_en1",
+    "example_ja1",
+    "class1"
+  ];
 
   //データ格納配列
   let data = [];
@@ -34,10 +34,10 @@ function __load (sheet) {
         value = sheet.getRange(y, x).getValue();
         // 必須値にデータがなければエラーを発生させる
         if (Common.isNull(value)) {
-          if (Common.isExisted(requiredParams, key)){
+          if (Common.isExisted(requiredParams, key)) {
             const errormsg = __createErrorMsg(spreadsheet, sheet, y, x);
             throw new ReferenceError(errormsg);
-          }else{
+          } else {
             continue;
           }
         }
@@ -50,17 +50,17 @@ function __load (sheet) {
     Common.outputError(error);
     return null;
   }
-  let parentJson = {}
+  let parentJson = {};
   parentJson["NancebookTable"] = data;
   return parentJson;
 }
 
-function exportJson () {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
-  const folder = Common.getFolder(spreadsheet)
-  const foldername = 'exportJson_' + Common.getTime()
-  const newFolder = Common.createFolder(folder, foldername)
-  const sheet = spreadsheet.getSheetByName('nb_words')
-  const jsonData = __load(sheet)
-  Common.createJsonFile(jsonData, sheet.getName(), newFolder)
+function exportJson() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const folder = Common.getFolder(spreadsheet);
+  const foldername = "exportJson_" + Common.getTime();
+  const newFolder = Common.createFolder(folder, foldername);
+  const sheet = spreadsheet.getSheetByName("nb_words");
+  const jsonData = __loadJson(sheet);
+  Common.createJsonFile(jsonData, sheet.getName(), newFolder);
 }

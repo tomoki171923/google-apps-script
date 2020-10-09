@@ -51,10 +51,10 @@ function createJsonFile(fileData, fileName, folder) {
  * @param {Folder} folder (require): ファイルを保存するフォルダオブジェクト
  */
 function createCsvFile(fileData, fileName, folder) {
-  var contentType = "text/csv";
+  const contentType = "text/csv";
   fileName += ".csv";
-  var charset = "utf-8";
-  var blob = Utilities.newBlob("", contentType, fileName).setDataFromString(
+  const charset = "utf-8";
+  const blob = Utilities.newBlob("", contentType, fileName).setDataFromString(
     fileData,
     charset
   );
