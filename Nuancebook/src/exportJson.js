@@ -51,7 +51,7 @@ function __loadJson(sheet) {
     return null;
   }
   let parentJson = {};
-  parentJson["Nancebook"] = data;
+  parentJson["Nuancebook"] = data;
   return parentJson;
 }
 
